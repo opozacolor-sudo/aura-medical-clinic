@@ -7,7 +7,6 @@ import { treatments } from "@/data/treatments";
 
 export default function TreatmentShowcase() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState<"next" | "prev">("next");
   const [animKey, setAnimKey] = useState(0);
   const [bookingOpen, setBookingOpen] = useState(false);
 
@@ -17,8 +16,7 @@ export default function TreatmentShowcase() {
   const next = treatments[(index + 1) % count];
 
   const goTo = useCallback(
-    (nextIndex: number, dir: "next" | "prev") => {
-      setDirection(dir);
+    (nextIndex: number) => {
       setIndex((nextIndex + count) % count);
       setAnimKey((value) => value + 1);
     },
@@ -27,8 +25,8 @@ export default function TreatmentShowcase() {
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if (event.key === "ArrowRight") goTo(index + 1, "next");
-      if (event.key === "ArrowLeft") goTo(index - 1, "prev");
+      if (event.key === "ArrowRight") goTo(index + 1);
+      if (event.key === "ArrowLeft") goTo(index - 1);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -37,75 +35,79 @@ export default function TreatmentShowcase() {
   return (
     <>
       <section className="mx-auto w-full max-w-[1180px] overflow-hidden rounded-[28px] bg-white shadow-[0_40px_80px_-28px_rgba(80,40,70,0.28)] lg:grid lg:min-h-[680px] lg:grid-cols-2">
-        <div className="relative flex min-h-[520px] flex-col bg-[#f6efe8] px-5 py-6 sm:px-8 lg:min-h-full">
-          <header className="relative z-20 flex items-center justify-between text-[11px] uppercase tracking-[0.22em] text-stone-500">
+        <div className="relative min-h-[520px] overflow-hidden bg-stone-200 lg:min-h-full">
+          {treatments.map((treatment, treatmentIndex) => (
+            <div
+              key={treatment.id}
+              className={`absolute inset-0 transition-opacity duration-500 ${
+                treatmentIndex === index ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Image
+                src={treatment.image}
+                alt={treatment.imageAlt}
+                fill
+                priority={treatmentIndex === 0}
+                className="object-cover object-[center_18%]"
+                sizes="(max-width: 1024px) 100vw, 590px"
+              />
+            </div>
+          ))}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/35 via-transparent to-stone-950/25"
+            aria-hidden
+          />
+
+          <header className="relative z-20 flex items-center justify-between px-5 py-6 text-[11px] uppercase tracking-[0.22em] text-white sm:px-8">
             <span>Aura</span>
             <div className="flex items-center gap-5">
               <span className="hidden sm:inline">Clinică</span>
               <span className="hidden sm:inline">Tratamente</span>
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-stone-300/80 bg-white/50">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/15 backdrop-blur-sm">
                 ♡
               </span>
             </div>
           </header>
 
-          <div className="relative z-10 mt-6 flex flex-1 items-center justify-center">
-            <div
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#efe4d8]"
-              aria-hidden
+          <button
+            type="button"
+              onClick={() => goTo(index - 1)}
+            className="group absolute left-0 top-1/2 z-20 h-[58%] w-[72px] -translate-y-1/2 overflow-hidden rounded-r-[18px] border border-white/40 shadow-[0_20px_40px_-18px_rgba(0,0,0,0.55)] transition duration-300 hover:w-[92px] sm:w-[88px] sm:hover:w-[110px]"
+            aria-label={`Tratament anterior: ${prev.title}`}
+          >
+            <Image
+              src={prev.image}
+              alt=""
+              fill
+              className="object-cover transition duration-500 group-hover:scale-110"
+              sizes="110px"
             />
+            <span className="absolute inset-0 bg-stone-950/25 group-hover:bg-stone-950/10" />
+            <span className="absolute inset-y-0 right-0 w-px bg-white/50" />
+            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-serif text-2xl text-white drop-shadow">
+              ‹
+            </span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => goTo(index - 1, "prev")}
-              className="absolute left-0 z-20 h-28 w-16 overflow-hidden rounded-[999px] border border-white/70 bg-white/50 shadow-sm backdrop-blur-md transition hover:bg-white/80 sm:h-36 sm:w-20"
-              aria-label={`Tratament anterior: ${prev.title}`}
-            >
-              <Image
-                src={prev.image}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </button>
-
-            <div
-              key={animKey}
-              className={`relative z-10 aspect-square w-[76%] max-w-[430px] overflow-hidden rounded-full shadow-[0_18px_40px_-20px_rgba(60,30,20,0.45)] ${
-                direction === "next" ? "animate-slide-in-right" : "animate-slide-in-left"
-              }`}
-            >
-              <Image
-                src={current.image}
-                alt={current.imageAlt}
-                fill
-                priority
-                className="object-cover object-[center_20%]"
-                sizes="(max-width: 1024px) 80vw, 420px"
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={() => goTo(index + 1, "next")}
-              className="absolute right-0 z-20 h-28 w-16 overflow-hidden rounded-[999px] border border-white/70 bg-white/50 shadow-sm backdrop-blur-md transition hover:bg-white/80 sm:h-36 sm:w-20"
-              aria-label={`Tratament următor: ${next.title}`}
-            >
-              <Image
-                src={next.image}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </button>
-          </div>
-
-          <p className="relative z-10 mt-6 font-serif text-3xl text-stone-800">
-            Catalog
-            <span className="ml-2 text-stone-400">:</span>
-          </p>
+          <button
+            type="button"
+              onClick={() => goTo(index + 1)}
+            className="group absolute right-0 top-1/2 z-20 h-[58%] w-[72px] -translate-y-1/2 overflow-hidden rounded-l-[18px] border border-white/40 shadow-[0_20px_40px_-18px_rgba(0,0,0,0.55)] transition duration-300 hover:w-[92px] sm:w-[88px] sm:hover:w-[110px]"
+            aria-label={`Tratament următor: ${next.title}`}
+          >
+            <Image
+              src={next.image}
+              alt=""
+              fill
+              className="object-cover transition duration-500 group-hover:scale-110"
+              sizes="110px"
+            />
+            <span className="absolute inset-0 bg-stone-950/25 group-hover:bg-stone-950/10" />
+            <span className="absolute inset-y-0 left-0 w-px bg-white/50" />
+            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-serif text-2xl text-white drop-shadow">
+              ›
+            </span>
+          </button>
         </div>
 
         <div className="flex flex-col bg-white px-6 py-8 sm:px-10 lg:px-12 lg:py-10">
