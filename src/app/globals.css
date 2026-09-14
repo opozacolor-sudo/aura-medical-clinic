@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3e7ef;
+  --background: #c94a7a;
   --foreground: #1c1917;
 }
 
@@ -29,32 +29,57 @@ body {
   }
 }
 
-@keyframes slide-in-right {
-  from {
-    transform: scale(0.985);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes slide-in-left {
-  from {
-    transform: scale(0.985);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
 .animate-fade-up {
   animation: fade-up 420ms ease;
 }
 
-.animate-slide-in-right {
-  animation: slide-in-right 480ms ease;
+.glass-stage {
+  background:
+    radial-gradient(900px 700px at 8% 12%, rgba(255, 214, 102, 0.95) 0%, transparent 58%),
+    radial-gradient(800px 700px at 92% 8%, rgba(255, 92, 168, 0.95) 0%, transparent 52%),
+    radial-gradient(900px 800px at 88% 92%, rgba(168, 85, 247, 0.95) 0%, transparent 55%),
+    radial-gradient(700px 600px at 10% 88%, rgba(244, 63, 94, 0.9) 0%, transparent 50%),
+    linear-gradient(135deg, #e11d74 0%, #7c3aed 48%, #db2777 100%);
 }
 
-.animate-slide-in-left {
-  animation: slide-in-left 480ms ease;
+.glass-window {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.14) 42%, rgba(255, 240, 248, 0.22) 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.92),
+    inset 1px 0 0 rgba(255, 255, 255, 0.4),
+    inset 0 -12px 24px rgba(255, 255, 255, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.55),
+    0 22px 36px rgba(90, 10, 60, 0.32),
+    0 48px 90px rgba(40, 0, 40, 0.28);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+}
+
+.glass-window::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  border-radius: inherit;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.06) 28%,
+    transparent 48%
+  );
+}
+
+.glass-panel {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.38) 100%
+  );
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
 }

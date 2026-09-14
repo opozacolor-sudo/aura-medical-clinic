@@ -34,8 +34,8 @@ export default function TreatmentShowcase() {
 
   return (
     <>
-      <section className="mx-auto w-full max-w-[1180px] overflow-hidden rounded-[28px] bg-white shadow-[0_40px_80px_-28px_rgba(80,40,70,0.28)] lg:grid lg:min-h-[680px] lg:grid-cols-2">
-        <div className="relative min-h-[520px] overflow-hidden bg-stone-200 lg:min-h-full">
+      <section className="glass-window mx-auto w-full max-w-[1180px] rounded-[32px] lg:grid lg:min-h-[680px] lg:grid-cols-2">
+        <div className="relative min-h-[520px] lg:min-h-full">
           {treatments.map((treatment, treatmentIndex) => (
             <div
               key={treatment.id}
@@ -54,7 +54,7 @@ export default function TreatmentShowcase() {
             </div>
           ))}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/35 via-transparent to-stone-950/25"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-rose-950/30 via-transparent to-white/10"
             aria-hidden
           />
 
@@ -63,7 +63,7 @@ export default function TreatmentShowcase() {
             <div className="flex items-center gap-5">
               <span className="hidden sm:inline">Clinică</span>
               <span className="hidden sm:inline">Tratamente</span>
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/15 backdrop-blur-sm">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/50 bg-white/20 backdrop-blur-md">
                 ♡
               </span>
             </div>
@@ -71,8 +71,8 @@ export default function TreatmentShowcase() {
 
           <button
             type="button"
-              onClick={() => goTo(index - 1)}
-            className="group absolute left-0 top-1/2 z-20 h-[58%] w-[72px] -translate-y-1/2 overflow-hidden rounded-r-[18px] border border-white/40 shadow-[0_20px_40px_-18px_rgba(0,0,0,0.55)] transition duration-300 hover:w-[92px] sm:w-[88px] sm:hover:w-[110px]"
+            onClick={() => goTo(index - 1)}
+            className="group absolute left-4 top-1/2 z-20 h-36 w-14 -translate-y-1/2 overflow-hidden rounded-[999px] border border-white/80 bg-white/20 shadow-[0_14px_28px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-md transition hover:scale-[1.05] sm:left-5 sm:h-44 sm:w-16"
             aria-label={`Tratament anterior: ${prev.title}`}
           >
             <Image
@@ -80,19 +80,14 @@ export default function TreatmentShowcase() {
               alt=""
               fill
               className="object-cover transition duration-500 group-hover:scale-110"
-              sizes="110px"
+              sizes="80px"
             />
-            <span className="absolute inset-0 bg-stone-950/25 group-hover:bg-stone-950/10" />
-            <span className="absolute inset-y-0 right-0 w-px bg-white/50" />
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-serif text-2xl text-white drop-shadow">
-              ‹
-            </span>
           </button>
 
           <button
             type="button"
-              onClick={() => goTo(index + 1)}
-            className="group absolute right-0 top-1/2 z-20 h-[58%] w-[72px] -translate-y-1/2 overflow-hidden rounded-l-[18px] border border-white/40 shadow-[0_20px_40px_-18px_rgba(0,0,0,0.55)] transition duration-300 hover:w-[92px] sm:w-[88px] sm:hover:w-[110px]"
+            onClick={() => goTo(index + 1)}
+            className="group absolute right-4 top-1/2 z-20 h-36 w-14 -translate-y-1/2 overflow-hidden rounded-[999px] border border-white/80 bg-white/20 shadow-[0_14px_28px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-md transition hover:scale-[1.05] sm:right-5 sm:h-44 sm:w-16"
             aria-label={`Tratament următor: ${next.title}`}
           >
             <Image
@@ -100,27 +95,22 @@ export default function TreatmentShowcase() {
               alt=""
               fill
               className="object-cover transition duration-500 group-hover:scale-110"
-              sizes="110px"
+              sizes="80px"
             />
-            <span className="absolute inset-0 bg-stone-950/25 group-hover:bg-stone-950/10" />
-            <span className="absolute inset-y-0 left-0 w-px bg-white/50" />
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-serif text-2xl text-white drop-shadow">
-              ›
-            </span>
           </button>
         </div>
 
-        <div className="flex flex-col bg-white px-6 py-8 sm:px-10 lg:px-12 lg:py-10">
+        <div className="glass-panel relative z-10 flex flex-col px-6 py-8 sm:px-10 lg:px-12 lg:py-10">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-md bg-stone-900 text-[10px] font-medium tracking-[0.18em] text-white">
+              <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-md border border-white/50 bg-stone-900/90 text-[10px] font-medium tracking-[0.18em] text-white shadow-lg">
                 AMC
               </div>
-              <p className="text-[11px] uppercase tracking-[0.28em] text-stone-400">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-stone-500">
                 Shop · Estetică · {current.catalog}
               </p>
             </div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-stone-400">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-stone-500">
               consultație
             </p>
           </div>
@@ -132,10 +122,10 @@ export default function TreatmentShowcase() {
             <h1 className="font-serif text-[2.35rem] leading-[1.05] tracking-tight text-stone-900 sm:text-5xl">
               {current.title}
             </h1>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.32em] text-stone-400">
+            <p className="mt-3 text-[11px] uppercase tracking-[0.32em] text-rose-400">
               {current.subtitle}
             </p>
-            <p className="mt-8 max-w-md text-sm leading-7 text-stone-500">
+            <p className="mt-8 max-w-md text-sm leading-7 text-stone-600">
               {current.description}
             </p>
 
@@ -145,14 +135,14 @@ export default function TreatmentShowcase() {
                   key={benefit}
                   className="flex items-start gap-3 text-sm text-stone-700"
                 >
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-stone-900" />
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500" />
                   {benefit}
                 </li>
               ))}
             </ul>
 
             <div className="mt-auto pt-10">
-              <div className="flex flex-wrap items-end justify-between gap-4 border-t border-stone-100 pt-6">
+              <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/50 pt-6">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.24em] text-stone-400">
                     Durată
@@ -172,7 +162,7 @@ export default function TreatmentShowcase() {
               <button
                 type="button"
                 onClick={() => setBookingOpen(true)}
-                className="mt-6 flex w-full items-center justify-between rounded-full bg-stone-900 px-6 py-3.5 text-sm text-white transition hover:bg-stone-800"
+                className="mt-6 flex w-full items-center justify-between rounded-full bg-stone-900 px-6 py-3.5 text-sm text-white shadow-[0_10px_24px_rgba(0,0,0,0.22)] transition hover:bg-stone-800"
               >
                 <span>Programează o Consultație</span>
                 <span aria-hidden>+</span>
